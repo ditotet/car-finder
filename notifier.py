@@ -36,6 +36,13 @@ def send_telegram_message(text, photo_url=None):
     resp.raise_for_status()
 
 
+def notify_configured(text):
+    """Send a plain Telegram message if Telegram is set up; otherwise just print it."""
+    print(text)
+    if TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID:
+        send_telegram_message(text)
+
+
 def notify_new_vehicles(vehicles):
     for vehicle in vehicles:
         text = format_message(vehicle)

@@ -6,7 +6,7 @@ from parse_bot_api import fetch_vehicles
 
 def main():
     conn = init_db()
-    vehicles = fetch_vehicles()
+    vehicles = fetch_vehicles(conn)
     new_vehicles = filter_new_lots(conn, vehicles)
 
     print(f"Fetched {len(vehicles)} vehicles, {len(new_vehicles)} new.")

@@ -4,7 +4,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-PARSE_API_KEY = os.environ["PARSE_API_KEY"]
+# Comma-separated list, tried in order; rotates to the next when one expires.
+# Falls back to the single PARSE_API_KEY for backwards compatibility.
+PARSE_API_KEYS = [
+    k.strip()
+    for k in (os.environ.get("PARSE_API_KEYS") or os.environ["PARSE_API_KEY"]).split(",")
+    if k.strip()
+]
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
 

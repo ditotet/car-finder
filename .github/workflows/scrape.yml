@@ -2,7 +2,8 @@ name: Scrape car auctions
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    # Hourly, 10:00-23:00 Tbilisi (UTC+4, no DST) = 06:00-19:00 UTC
+    - cron: "0 6-19 * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -26,7 +27,7 @@ jobs:
 
       - run: python scraper.py
         env:
-          PARSE_API_KEY: ${{ secrets.PARSE_API_KEY }}
+          PARSE_API_KEYS: ${{ secrets.PARSE_API_KEYS }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 

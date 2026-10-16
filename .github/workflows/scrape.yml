@@ -2,7 +2,8 @@ name: Scrape car auctions
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    # Hourly, 10:00-23:00 Tbilisi (UTC+4, no DST) = 06:00-19:00 UTC
+    - cron: "0 6-19 * * *"
   workflow_dispatch: {}
 
 permissions:

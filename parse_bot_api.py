@@ -1,6 +1,13 @@
 import requests
 
-from config import API_URL, PARSE_API_KEYS, SEARCH_FILTERS
+from config import (
+    API_URL,
+    AWD_DRIVE_TYPE,
+    AWD_VIN_MOTOR_CODES,
+    PARSE_API_KEYS,
+    RWD_VIN_MOTOR_CODES,
+    SEARCH_FILTERS,
+)
 from db import get_meta, set_meta
 from notifier import notify_configured
 
@@ -19,6 +26,16 @@ def _active_index(conn):
         if saved and key.endswith(saved):
             return i
     return 0
+
+
+def is_awd(vehicle):
+    vin = vehicle.get("vin") or ""
+    motor_code = vin[7].upper() if len(vin) >= 8 else ""
+    if motor_code in AWD_VIN_MOTOR_CODES:
+        return True
+    if motor_code in RWD_VIN_MOTOR_CODES:
+        return False
+    return vehicle.get("drive_type") == AWD_DRIVE_TYPE
 
 
 def _fetch_all(key):
@@ -59,4 +76,4 @@ def fetch_vehicles(conn):
             )
             raise
         set_meta(conn, "active_key_suffix", key[-6:])
-        return vehicles
+        return [v for v in vehicles if is_awd(v)]

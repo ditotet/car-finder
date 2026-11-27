@@ -2,8 +2,9 @@ name: Scrape car auctions
 
 on:
   schedule:
-    # Hourly, 10:00-23:00 Tbilisi (UTC+4, no DST) = 06:00-19:00 UTC
-    - cron: "0 6-19 * * *"
+    # Hourly, 10:17-23:17 Tbilisi (UTC+4, no DST) = 06:17-19:17 UTC.
+    # Off the :00 mark: GitHub delays/drops scheduled runs at the top of the hour.
+    - cron: "17 6-19 * * *"
   workflow_dispatch: {}
 
 permissions:

@@ -19,9 +19,16 @@ API_URL = f"https://api.parse.bot/scraper/{SCRAPER_ID}/search_vehicles"
 
 SEARCH_FILTERS = {
     "make": "Tesla",
-    "model": "Model S",
-    "year_from": 2021,
-    "year_to": 2024,
+    "model": "Model 3",
+    "year_from": 2026,
+    "year_to": 2026,
 }
+
+# Only keep dual-motor (AWD) cars: Premium AWD or Performance.
+# Tesla VIN position 8 is the motor code: A = single motor RWD,
+# B = dual motor AWD, T = dual motor Performance.
+AWD_VIN_MOTOR_CODES = {"B", "T"}
+RWD_VIN_MOTOR_CODES = {"A"}
+AWD_DRIVE_TYPE = 2
 
 DB_PATH = os.environ.get("DB_PATH", "seen.db")
